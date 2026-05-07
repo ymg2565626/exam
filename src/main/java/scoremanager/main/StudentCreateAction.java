@@ -12,7 +12,7 @@ import tool.Action;
 
 public class StudentCreateAction extends Action {
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession();
         Teacher teacher = (Teacher) session.getAttribute("user");
