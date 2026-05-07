@@ -58,7 +58,7 @@ public class LoginExecuteAction extends Action {
 
 			//フォワード
 			url = "login.jsp";
-			req.getRequestDispatcher(url).forward(req, res);
+			req.getRequestDispatcher(url).forward(reqest, responce);
 		}
 
 	}
