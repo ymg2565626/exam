@@ -15,7 +15,7 @@ import tool.Action;
 public class LoginExecuteAction extends Action {
 
 	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void execute(HttpServletRequest request, HttpServletResponse responce) throws Exception {
 
 		//ローカル変数の宣言 1
 		String url = "";
@@ -58,7 +58,7 @@ public class LoginExecuteAction extends Action {
 
 			//フォワード
 			url = "login.jsp";
-			req.getRequestDispatcher(url).forward(reqest, responce);
+			req.getRequestDispatcher(url).forward(request, responce);
 		}
 
 	}
