@@ -36,6 +36,7 @@ public class StudentUpdateExecuteAction extends Action {
         StudentDAO dao = new StudentDAO();
         dao.update(s);
 
-        return "StudentList.do";
+        request.getRequestDispatcher("student_list.jsp")
+               .forward(request, response);
     }
 }
