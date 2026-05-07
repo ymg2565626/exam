@@ -1,4 +1,3 @@
-
 package bean;
 
 import java.io.Serializable;
@@ -9,12 +8,14 @@ public class Subject implements Serializable {
     private String name;
     private School school;
 
-    public String getId() {
+    // DAO側の getCd() に対応
+    public String getCd() {
         return cd;
     }
 
-    public void setId(String id) {
-        this.cd = id;
+    // DAO側の setCd() に対応
+    public void setCd(String cd) {
+        this.cd = cd;
     }
 
     public String getName() {
