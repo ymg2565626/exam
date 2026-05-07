@@ -15,7 +15,7 @@ import tool.Action;
 
 public class StudentListAction extends Action {
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         // セッション取得
         HttpSession session = request.getSession();
