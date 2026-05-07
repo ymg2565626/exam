@@ -11,7 +11,7 @@ import tool.Action;
 
 public class StudentCreateExecuteAction extends Action {
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         request.setCharacterEncoding("UTF-8");
 
