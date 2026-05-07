@@ -14,6 +14,7 @@ public class LogoutAction extends Action {
             session.invalidate();
         }
 
-        return "login.jsp"; 
+        request.getRequestDispatcher("login.jsp")
+        .forward(request, response); 
     }
 }
