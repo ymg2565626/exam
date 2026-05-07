@@ -11,7 +11,7 @@ import tool.Action;
 
 public class StudentUpdateExecuteAction extends Action {
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         request.setCharacterEncoding("UTF-8");
 
@@ -37,6 +37,6 @@ public class StudentUpdateExecuteAction extends Action {
         dao.update(s);
 
         request.getRequestDispatcher("student_list.jsp")
-               .forward(request, response);
+        .forward(request, response);
     }
 }
