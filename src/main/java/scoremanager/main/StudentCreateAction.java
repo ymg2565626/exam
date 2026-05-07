@@ -22,6 +22,7 @@ public class StudentCreateAction extends Action {
 
         request.setAttribute("classNumList", list);
 
-        return "student_create.jsp";
+        request.getRequestDispatcher("student_create.jsp")
+        .forward(request, response); 
     }
 }
