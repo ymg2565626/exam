@@ -25,7 +25,8 @@ public class StudentListAction extends Action {
 
         if (teacher == null) {
             System.out.println("【DEBUG】teacher is null");
-            return "login.jsp";
+            request.getRequestDispatcher("login.jsp")
+            .forward(request, response);
         }
 
         // 学校取得
@@ -33,7 +34,8 @@ public class StudentListAction extends Action {
 
         if (school == null) {
             System.out.println("【DEBUG】school is null");
-            return "error.jsp";
+            request.getRequestDispatcher("error.jsp")
+            .forward(request, response); 
         }
 
         System.out.println("【DEBUG】school_cd = " + school.getCd());
@@ -79,6 +81,7 @@ public class StudentListAction extends Action {
         request.setAttribute("isAttend", isAttend);
 
         // 画面へ
-        return "student_list.jsp";
+        request.getRequestDispatcher("student_list.jsp")
+        .forward(request, response);
     }
 }
