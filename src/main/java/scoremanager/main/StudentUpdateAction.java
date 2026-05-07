@@ -13,7 +13,7 @@ import tool.Action;
 
 public class StudentUpdateAction extends Action {
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String noStr = request.getParameter("no");
 
@@ -26,7 +26,8 @@ public class StudentUpdateAction extends Action {
             Student student = dao.get(no);
 
             request.setAttribute("student", student);
-            return "student_update.jsp";
+            request.getRequestDispatcher("student_update.jsp")
+            .forward(request, response);
         }
 
         //noがない → 一覧を表示（選択画面）
@@ -38,6 +39,7 @@ public class StudentUpdateAction extends Action {
 
         request.setAttribute("studentList", list);
 
-        return "student_update_list.jsp";
+        request.getRequestDispatcher("student_update_list.jsp")
+        .forward(request, response);
     }
 }
