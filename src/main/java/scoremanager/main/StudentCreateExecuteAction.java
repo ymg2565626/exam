@@ -38,6 +38,7 @@ public class StudentCreateExecuteAction extends Action {
         StudentDAO dao = new StudentDAO();
         dao.save(s);
 
-        return "StudentList.do";
+        request.getRequestDispatcher("student_list.jsp")
+        .forward(request, response); 
     }
 }
