@@ -5,7 +5,7 @@ import java.util.Map;
 
 import bean.Subject;
 import bean.Teacher;
-import dao.SubjectDao;
+import dao.SubjectDAO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -22,7 +22,7 @@ public class SubjectCreateExecuteAction extends Action {
 		String subject_cd = ""; // 入力された科目コード
 		String subject_name = "";//入力された科目名
 		Subject subject = new Subject();
-		SubjectDao subjectDao = new SubjectDao();
+		SubjectDAO subjectDao = new SubjectDAO();
 		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
 		Subject list_subject = null;
 		// リクエストパラメーターの取得 2
