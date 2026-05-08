@@ -23,4 +23,4 @@
 </table>
 
 <br>
-<a href="menu.do">メニューに戻る</a>
+<a href="menu.jsp">メニューに戻る</a>
