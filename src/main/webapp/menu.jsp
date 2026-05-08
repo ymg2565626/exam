@@ -32,7 +32,7 @@
 
 <hr>
 
-<form action="logout.do" method="post">
+<form action="logout.jsp" method="post">
     <input type="submit" value="ログアウト">
 </form>
 
