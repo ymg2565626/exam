@@ -4,7 +4,7 @@ import java.util.List;
 
 import bean.Subject;
 import bean.Teacher;
-import dao.SubjectDao;
+import dao.SubjectDAO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -17,7 +17,7 @@ public class SubjectListAction extends Action {
 		// ローカル変数の指定 1
 		HttpSession session = req.getSession();
 		Teacher teacher = (Teacher)session.getAttribute("user");
-		SubjectDao subjectDao = new SubjectDao();
+		SubjectDAO subjectDao = new SubjectDAO();
 		List<Subject> subjects = null;
 		// リクエストパラメーターの取得 2
 		subjects = subjectDao.filter(teacher.getSchool());
