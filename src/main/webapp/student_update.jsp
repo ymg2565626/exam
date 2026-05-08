@@ -2,7 +2,7 @@
 
 <h2>学生変更</h2>
 
-<form action="StudentUpdateExecute.do" method="post">
+<form action="StudentUpdateExecute.jsp" method="post">
 
     学籍番号：<input type="text" name="no" value="${student.no}" readonly><br>
 
@@ -24,4 +24,4 @@
 
 <br>
 
-<a href="StudentList.do">一覧に戻る</a>
+<a href="StudentList.jsp">一覧に戻る</a>
