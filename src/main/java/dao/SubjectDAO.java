@@ -9,7 +9,7 @@ import java.util.List;
 import bean.School;
 import bean.Subject;
 
-public class SubjectDao extends Dao {
+public class SubjectDAO extends DAO {
 
     // 科目コード + 学校で1件取得
     public Subject get(String cd, School school) throws Exception {
