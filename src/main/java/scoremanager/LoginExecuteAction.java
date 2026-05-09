@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.Teacher;
-import dao.TeacherDao;
+import dao.TeacherDAO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -20,7 +20,7 @@ public class LoginExecuteAction extends Action {
 		String url="";
 		String id ="";
 		String password ="";
-		TeacherDao teacherDao = new TeacherDao();
+		TeacherDAO teacherDao = new TeacherDAO();
 		Teacher teacher = null;
 
 		//リクエストパラメータ―の取得 2
