@@ -78,3 +78,4 @@ public class StudentCreateExecuteAction extends Action {
 			req.getRequestDispatcher("StudentCreate.action").forward(req, res);
 		}
 	}
+}
