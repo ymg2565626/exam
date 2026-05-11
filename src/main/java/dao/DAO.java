@@ -1,16 +1,31 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 public class DAO {
+	/**
+	 * データソース:DataSource:クラスフィールド
+	 */
+	static DataSource ds;
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/exam";
-    private static final String USER = "postgres";
-    private static final String PASS = "postgres";
-
-    public Connection getConnection() throws Exception {
-        Class.forName("org.postgresql.Driver");
-        return DriverManager.getConnection(URL, USER, PASS);
-    }
+	/**
+	 * getConnectionメソッド データベースへのコネクションを返す
+	 *
+	 * @return データベースへのコネクション:Connection
+	 * @throws Exception
+	 */
+	public Connection getConnection() throws Exception {
+		// データソースがnullの場合
+		if (ds == null) {
+			// InitialContextを初期化
+			InitialContext ic = new InitialContext();
+			// データベースへ接続
+			ds = (DataSource) ic.lookup("java:/comp/env/jdbc/exam");
+		}
+		// データベースへのコネクションを返却
+		return ds.getConnection();
+	}
 }
