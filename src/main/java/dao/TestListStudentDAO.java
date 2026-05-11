@@ -4,20 +4,25 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import bean.Student;
 import bean.TestListStudent;
 
 public class TestListStudentDAO extends DAO {
 
     // ベースSQL
-    private String baseSql =
-        "select "
-      + "s.name as subject_name, "
-      + "s.cd as subject_cd, "
-      + "t.no as num, "
-      + "t.point as point "
-      + "from test t "
-      + "join subject s on t.subject_cd = s.cd ";
+	private String baseSql =
+		    "select "
+		  + "st.no as student_no, "
+		  + "st.name as student_name, "
+		  + "st.class_num as class_num, "
+		  + "s.name as subject_name, "
+		  + "s.cd as subject_cd, "
+		  + "t.no as num, "
+		  + "t.point as point "
+		  + "from test t "
+		  + "join subject s "
+		  + "on t.subject_cd = s.cd "
+		  + "join student st "
+		  + "on t.student_no = st.no ";
 
     /**
      * ResultSet → List<TestListStudent> 変換
@@ -45,20 +50,54 @@ public class TestListStudentDAO extends DAO {
     /**
      * 学生ごとのテスト一覧取得
      */
-    public List<TestListStudent> filter(Student student)
-            throws Exception {
+    public List<TestListStudent> filter(
+            String entYear,
+            String classNum,
+            String subjectCd
+    ) throws Exception {
 
-        List<TestListStudent> list = new ArrayList<>();
+        List<TestListStudent> list =
+            new ArrayList<>();
 
         String sql = baseSql
-                + "where t.student_no = ?";
+                + "where 1=1 ";
+
+        // 入学年度
+        if (entYear != null && !entYear.isEmpty()) {
+            sql += "and st.ent_year = ? ";
+        }
+
+        // クラス
+        if (classNum != null && !classNum.isEmpty()) {
+            sql += "and st.class_num = ? ";
+        }
+
+        // 科目
+        if (subjectCd != null && !subjectCd.isEmpty()) {
+            sql += "and t.subject_cd = ? ";
+        }
 
         try (
             var con = getConnection();
             var st = con.prepareStatement(sql);
         ) {
 
-            st.setString(1, student.getNo());
+            int idx = 1;
+
+            // 入学年度
+            if (entYear != null && !entYear.isEmpty()) {
+                st.setString(idx++, entYear);
+            }
+
+            // クラス
+            if (classNum != null && !classNum.isEmpty()) {
+                st.setString(idx++, classNum);
+            }
+
+            // 科目
+            if (subjectCd != null && !subjectCd.isEmpty()) {
+                st.setString(idx++, subjectCd);
+            }
 
             ResultSet rs = st.executeQuery();
 
