@@ -1,42 +1,56 @@
 package scoremanager.main;
 
-import bean.School;
+
 import bean.Student;
-import bean.Teacher;
 import dao.StudentDAO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import tool.Action;
 
 public class StudentUpdateExecuteAction extends Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@Override
+	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-        request.setCharacterEncoding("UTF-8");
+		// ローカル変数の指定 1
+		int ent_year = 0;
+		String no = "";
+		String name = "";
+		String class_num = "";
+		String isAttendStr = "";
+		boolean isAttend = false;
+		Student student = new Student();
+		StudentDAO studentDao = new StudentDAO();
 
-        int no = Integer.parseInt(request.getParameter("no"));
-        String name = request.getParameter("name");
-        int entYear = Integer.parseInt(request.getParameter("entYear"));
-        String classNum = request.getParameter("classNum");
-        boolean isAttend = Boolean.parseBoolean(request.getParameter("isAttend"));
+		// リクエストパラメーターの取得 2
+		ent_year = Integer.parseInt(req.getParameter("ent_year"));
+		no = req.getParameter("no");
+		name = req.getParameter("name");
+		class_num = req.getParameter("class_num");
+		isAttendStr = req.getParameter("is_attend");
 
-        HttpSession session = request.getSession();
-        Teacher teacher = (Teacher) session.getAttribute("user");
-        School school = teacher.getSchool();
+		// DBからデータ取得 3
+		// なし
 
-        Student s = new Student();
-        s.setNo(no);
-        s.setName(name);
-        s.setEntYear(entYear);
-        s.setClassNum(classNum);
-        s.setAttend(isAttend);
-        s.setSchool(school);
+		// ビジネスロジック 4
+		if (isAttendStr != null) {
+			isAttend = true;
+		}
+		// studentに学生情報をセット
+		student.setNo(no);
+		student.setName(name);
+		student.setEntYear(ent_year);
+		student.setClassNum(class_num);
+		student.setAttend(isAttend);
+		// 変更内容を保存
+		studentDao.save(student);
 
-        StudentDAO dao = new StudentDAO();
-        dao.update(s);
+		// レスポンス値をセット 6
+		// なし
 
-        request.getRequestDispatcher("student_list.jsp")
-        .forward(request, response);
-    }
+		// JSPへフォワード 7
+		req.getRequestDispatcher("student_update_done.jsp").forward(req, res);
+	}
+
 }
+
