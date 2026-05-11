@@ -7,14 +7,33 @@ import tool.Action;
 
 public class LogoutAction extends Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@Override
+	public void execute(HttpServletRequest req, HttpServletResponse res)
+			throws Exception {
+		//ローカル変数の宣言 1
+		String url = "";
+		HttpSession session=req.getSession();
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+		//リクエストパラメータ―の取得 2
+		//なし
 
-        request.getRequestDispatcher("login.jsp")
-        .forward(request, response); 
-    }
+		//DBからデータ取得 3
+		//なし
+
+		//ビジネスロジック 4
+		if (session.getAttribute("user") != null) {
+			session.invalidate();
+		}
+
+		//DBへデータ保存 5
+		//なし
+
+		//レスポンス値をセット 6
+		//なし
+
+		//JSPへフォワード 7
+		url = "logout.jsp";
+		req.getRequestDispatcher(url).forward(req, res);
+	}
+
 }
