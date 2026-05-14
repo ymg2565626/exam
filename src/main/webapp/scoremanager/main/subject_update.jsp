@@ -17,9 +17,10 @@
 					<label class="mx-auto py-2" for="cd">科目コード</label><br>
 					<input class="border border-0 ps-3" type="text" id="cd" name="cd" value="${subject.cd }" readonly />
 				</div>
+				<div class="mt-2 text-warning">${errors.get("1") }</div>
 				<div class="mx-auto py-2">
 					<label for="name">科目名</label><br>
-					<input class="form-control" type="text" id="name" name="name" value="${subject.name }" required maxlength="20" />
+					<input class="form-control" type="text" id="name" name="name" value="${subject.name }" required maxlength="20" placeholder="科目名を入力してください" />
 				</div>
 				<div class="mx-auto py-2">
 					<input class="btn btn-primary" type="submit" value="変更"/>
@@ -29,3 +30,4 @@
 		</section>
 	</c:param>
 </c:import>
+
