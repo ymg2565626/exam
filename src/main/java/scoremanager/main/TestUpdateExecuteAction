@@ -1,0 +1,40 @@
+package scoremanager.main;
+
+import java.io.IOException;
+
+import bean.Test;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/test/update")
+public class TestUpdateExecuteAction extends HttpServlet {
+
+    @Override
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+    	try {
+    		int no = Integer.parseInt(request.getParameter("no"));
+    		int point = Integer.parseInt(request.getParameter("point"));
+
+    		Test test = new Test();
+    		test.setNo(no);
+    		test.setPoint(point);
+
+    		TestDAO dao = new TestDAO();
+    		dao.update(no, test); 
+
+            response.sendRedirect("testList");
+    	}catch (NumberFormatException e) {
+    		 request.setAttribute("error",
+                     "点数は数値で入力してください");
+
+             request.getRequestDispatcher("/WEB-INF/error.jsp")
+                     .forward(request, response);
+    	}
+    }
+}
