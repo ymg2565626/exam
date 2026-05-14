@@ -15,7 +15,10 @@ public class SubjectDeleteExecuteAction extends Action {
 
 		HttpSession session = req.getSession();
 		Teacher teacher = (Teacher) session.getAttribute("user");
-		String cd = req.getParameter("cd");
+		String cd = req.getParameter("subject_cd");
+		if (cd == null) {
+			cd = req.getParameter("cd");
+		}
 		Subject subject = new Subject();
 		SubjectDAO subjectDao = new SubjectDAO();
 
@@ -24,6 +27,7 @@ public class SubjectDeleteExecuteAction extends Action {
 
 		subjectDao.delete(subject);
 
-		req.getRequestDispatcher("SubjectList.action").forward(req, res);
+		req.getRequestDispatcher("subject_delete_done.jsp").forward(req, res);
 	}
 }
+
