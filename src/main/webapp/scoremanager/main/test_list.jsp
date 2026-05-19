@@ -1,6 +1,5 @@
-<%-- 成績一覧JSP --%>
-<%@ page language="java"
-	contentType="text/html; charset=UTF-8"
+<%-- 成績参照JSP --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
@@ -8,137 +7,135 @@
 <c:import url="/common/base.jsp">
 
 	<c:param name="title">
-		得点管理システム
+		成績参照
 	</c:param>
-
-	<c:param name="scripts"></c:param>
 
 	<c:param name="content">
 
 		<section class="me-4">
 
-			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
-				成績管理
+			<h2 class="h3 mb-4 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
+				成績参照
 			</h2>
 
-			<!-- 検索フォーム -->
-			<form method="get">
+			<form action="TestListSubject.action" method="get">
 
-				<div class="row border mx-3 mb-3 py-2 align-items-center rounded">
+				<h4>科目情報</h4>
 
-					<!-- 入学年度 -->
+				<div class="row mb-4">
+
 					<div class="col-3">
-						<label class="form-label">入学年度</label>
 
-						<select class="form-select" name="f1">
+						<label class="form-label">
+							入学年度
+						</label>
+
+						<select name="f1" class="form-select">
 
 							<option value="">--------</option>
 
 							<c:forEach var="year" items="${ent_year_set}">
-								<option value="${year}"
-									<c:if test="${year==f1}">
-										selected
-									</c:if>>
+
+								<option value="${year}">
 									${year}
 								</option>
+
 							</c:forEach>
 
 						</select>
+
 					</div>
 
-					<!-- クラス -->
 					<div class="col-3">
-						<label class="form-label">クラス</label>
 
-						<select class="form-select" name="f2">
+						<label class="form-label">
+							クラス
+						</label>
+
+						<select name="f2" class="form-select">
 
 							<option value="">--------</option>
 
 							<c:forEach var="num" items="${class_num_set}">
-								<option value="${num}"
-									<c:if test="${num==f2}">
-										selected
-									</c:if>>
+
+								<option value="${num}">
 									${num}
 								</option>
+
 							</c:forEach>
 
 						</select>
+
 					</div>
 
-					<!-- 科目 -->
 					<div class="col-3">
-						<label class="form-label">科目</label>
 
-						<select class="form-select" name="f3">
+						<label class="form-label">
+							科目
+						</label>
+
+						<select name="subject" class="form-select">
 
 							<option value="">--------</option>
 
-							<c:forEach var="subject" items="${subjects}">
-								<option value="${subject.cd}"
-									<c:if test="${subject.cd==f3}">
-										selected
-									</c:if>>
+							<c:forEach var="subject" items="${subject_set}">
+
+								<option value="${subject.cd}">
 									${subject.name}
 								</option>
+
 							</c:forEach>
 
 						</select>
+
 					</div>
 
-					<!-- 検索ボタン -->
-					<div class="col-3 text-center mt-4">
+					<div class="col-2 d-flex align-items-end">
+
 						<button class="btn btn-secondary">
 							検索
 						</button>
+
 					</div>
 
 				</div>
 
 			</form>
 
-			<!-- 一覧 -->
-			<c:choose>
+			<form action="TestListStudent.action" method="get">
 
-				<c:when test="${test_list.size() > 0}">
+				<h4>学生情報</h4>
 
-					<div>
-						検索結果：${test_list.size()}件
+				<div class="row">
+
+					<div class="col-4">
+
+						<label class="form-label">
+							学生番号
+						</label>
+
+						<input
+							type="text"
+							name="student_no"
+							class="form-control">
+
 					</div>
 
-					<table class="table table-hover">
+					<div class="col-2 d-flex align-items-end">
 
-						<tr>
-							<th>科目名</th>
-							<th>科目コード</th>
-							<th>回数</th>
-							<th>点数</th>
-						</tr>
+						<button class="btn btn-secondary">
+							検索
+						</button>
 
-						<c:forEach var="test" items="${test_list}">
-
-							<tr>
-								<td>${test.subjectName}</td>
-								<td>${test.subjectCd}</td>
-								<td>${test.num}</td>
-								<td>${test.point}</td>
-							</tr>
-
-						</c:forEach>
-
-					</table>
-
-				</c:when>
-
-				<c:otherwise>
-
-					<div>
-						成績情報が存在しませんでした。
 					</div>
 
-				</c:otherwise>
+				</div>
 
-			</c:choose>
+			</form>
+
+			<div class="text-info mt-4">
+				科目情報を選択または学生情報を入力して検索ボタンをクリックしてください
+			</div>
 
 		</section>
 
