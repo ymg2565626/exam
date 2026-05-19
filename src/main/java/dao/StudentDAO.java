@@ -334,4 +334,18 @@ public class StudentDAO extends DAO {
 			return false;
 		}
 	}
+
+	public List<Student> filter(
+	        int entYear,
+	        String classNum,
+	        boolean isAttend,
+	        School school) throws Exception {
+
+	    return filter(
+	            school,
+	            entYear,
+	            classNum,
+	            isAttend);
+	}
+	
 }
