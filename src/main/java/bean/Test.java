@@ -5,57 +5,72 @@ import java.io.Serializable;
 public class Test implements Serializable {
 
 	private Student student;
-    private String classNum;
-    private Subject subject;
-    private School school;
-    private int no;
-    private int point;
+	private String classNum;
+	private Subject subject;
+	private School school;
 
-    public Student getStudent() {
-        return student;
-    }
+	// 回数
+	private int count;
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
+	// 点数
+	private int point;
 
-    public String getClassNum() {
-        return classNum;
-    }
+	public Student getStudent() {
+		return student;
+	}
 
-    public void setClassNum(String classNum) {
-        this.classNum = classNum;
-    }
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 
-    public Subject getSubject() {
-        return subject;
-    }
+	public String getClassNum() {
+		return classNum;
+	}
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
+	public void setClassNum(String classNum) {
+		this.classNum = classNum;
+	}
 
-    public School getSchool() {
-        return school;
-    }
+	public Subject getSubject() {
+		return subject;
+	}
 
-    public void setSchool(School school) {
-        this.school = school;
-    }
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
 
-    public int getNo() {
-        return no;
-    }
+	public School getSchool() {
+		return school;
+	}
 
-    public void setNo(int no) {
-        this.no = no;
-    }
+	public void setSchool(School school) {
+		this.school = school;
+	}
 
-    public int getPoint() {
-        return point;
-    }
+	public int getCount() {
+		return count;
+	}
 
-    public void setPoint(int point) {
-        this.point = point;
-    }
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+	public void setNo(int no) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
+
+	public int getNo() {
+		// TODO 自動生成されたメソッド・スタブ
+		return 0;
+	}
+
 }
