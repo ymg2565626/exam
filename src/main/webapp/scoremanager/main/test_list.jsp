@@ -14,127 +14,137 @@
 
 		<section class="me-4">
 
-			<h2 class="h3 mb-4 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
-				成績参照
+			<h2 class="h3 mb-4 fw-normal
+				bg-secondary bg-opacity-10
+				py-2 px-4">
+
+				成績一覧（科目）
+
 			</h2>
 
-			<form action="TestListSubject.action" method="get">
+			<div class="border rounded p-4">
 
-				<h4>科目情報</h4>
+				<!-- 科目検索 -->
+				<form action="TestListSubject.action"
+					method="post">
 
-				<div class="row mb-4">
+					<div class="row align-items-end mb-4">
 
-					<div class="col-3">
+						<div class="col-3">
 
-						<label class="form-label">
-							入学年度
-						</label>
+							<label class="form-label">
+								入学年度
+							</label>
 
-						<select name="f1" class="form-select">
+							<select name="f1"
+								class="form-select">
 
-							<option value="">--------</option>
+								<c:forEach var="year"
+									items="${ent_year_set}">
 
-							<c:forEach var="year" items="${ent_year_set}">
+									<option value="${year}">
+										${year}
+									</option>
 
-								<option value="${year}">
-									${year}
-								</option>
+								</c:forEach>
 
-							</c:forEach>
+							</select>
 
-						</select>
+						</div>
 
-					</div>
+						<div class="col-3">
 
-					<div class="col-3">
+							<label class="form-label">
+								クラス
+							</label>
 
-						<label class="form-label">
-							クラス
-						</label>
+							<select name="f2"
+								class="form-select">
 
-						<select name="f2" class="form-select">
+								<c:forEach var="num"
+									items="${class_num_set}">
 
-							<option value="">--------</option>
+									<option value="${num}">
+										${num}
+									</option>
 
-							<c:forEach var="num" items="${class_num_set}">
+								</c:forEach>
 
-								<option value="${num}">
-									${num}
-								</option>
+							</select>
 
-							</c:forEach>
+						</div>
 
-						</select>
+						<div class="col-4">
 
-					</div>
+							<label class="form-label">
+								科目
+							</label>
 
-					<div class="col-3">
+							<select name="subject"
+								class="form-select">
 
-						<label class="form-label">
-							科目
-						</label>
+								<c:forEach var="subject"
+									items="${subject_set}">
+		
+									<option value="${subject.cd}">
+										${subject.name}
+									</option>
 
-						<select name="subject" class="form-select">
+								</c:forEach>
 
-							<option value="">--------</option>
+							</select>
 
-							<c:forEach var="subject" items="${subject_set}">
+						</div>
 
-								<option value="${subject.cd}">
-									${subject.name}
-								</option>
+						<div class="col-2">
 
-							</c:forEach>
+							<button class="btn btn-secondary">
+		
+								検索
 
-						</select>
+							</button>
 
-					</div>
-
-					<div class="col-2 d-flex align-items-end">
-
-						<button class="btn btn-secondary">
-							検索
-						</button>
-
-					</div>
-
-				</div>
-
-			</form>
-
-			<form action="TestListStudent.action" method="get">
-
-				<h4>学生情報</h4>
-
-				<div class="row">
-
-					<div class="col-4">
-
-						<label class="form-label">
-							学生番号
-						</label>
-
-						<input
-							type="text"
-							name="student_no"
-							class="form-control">
+						</div>
 
 					</div>
 
-					<div class="col-2 d-flex align-items-end">
+				<form>
 
-						<button class="btn btn-secondary">
-							検索
-						</button>
+				<hr>
+
+				<!-- 学生検索 -->
+				<form action="TestListStudent.action"
+					method="post">
+
+					<div class="row align-items-end">
+
+						<div class="col-6">
+
+							<label class="form-label">
+								学生番号
+							</label>
+
+							<input type="text"
+								name="studentNo"
+								class="form-control"
+								placeholder="学生番号を入力してください">
+
+						</div>
+
+						<div class="col-2">
+
+							<button class="btn btn-secondary">
+
+								検索
+
+							</button>
+
+						</div>
 
 					</div>
 
-				</div>
+				</form>
 
-			</form>
-
-			<div class="text-info mt-4">
-				科目情報を選択または学生情報を入力して検索ボタンをクリックしてください
 			</div>
 
 		</section>
