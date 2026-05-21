@@ -24,6 +24,8 @@ public class TestListSubjectDAO extends DAO {
 			while (rSet.next()) {
 				// 科目別リストインスタンスを初期化
 				TestListSubject tls = new TestListSubject();
+				//点数管理用のMapを初期化
+				tls.setPoints(new HashMap<Integer,Integer>());
 				// 科目別リストインスタンスに検索結果をセット
 				tls.setEntYear(rSet.getInt("ent_year"));
 				tls.setStudentNo(rSet.getString("no"));
