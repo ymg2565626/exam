@@ -1,14 +1,18 @@
 package scoremanager.main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import bean.Student;
 import bean.Subject;
 import bean.Teacher;
+import bean.Test;
 import dao.ClassNumDAO;
 import dao.StudentDAO;
 import dao.SubjectDAO;
+import dao.TestDAO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -121,6 +125,25 @@ public class TestRegistAction extends Action {
 
 		System.out.println(
 				"no = " + no);
+		
+		if (f1 != null) {
+
+			if (f1.isEmpty()
+					|| f2.isEmpty()
+					|| subjectCd.isEmpty()
+					|| no.isEmpty()) {
+
+				req.setAttribute(
+						"error",
+						"すべて選択してください");
+
+				req.getRequestDispatcher(
+						"test_regist.jsp")
+						.forward(req, res);
+
+				return;
+			}
+		}
 
 		// 検索条件入力済みなら実行
 		if (f1 != null
@@ -147,12 +170,17 @@ public class TestRegistAction extends Action {
 					studentDao.filter(
 							entYear,
 							f2,
-							true,
+							false,
 							teacher.getSchool());
 
 			System.out.println(
 					"students size = "
 					+ students.size());
+			
+			req.setAttribute("f1", f1);
+			req.setAttribute("f2", f2);
+			req.setAttribute("subject", subjectCd);
+			req.setAttribute("selected_no", no);
 
 			req.setAttribute(
 					"students",
@@ -165,11 +193,41 @@ public class TestRegistAction extends Action {
 			req.setAttribute(
 					"no",
 					no);
+			
+			Map<String, Integer> pointMap =
+					new HashMap<>();
+
+			TestDAO testDao =
+					new TestDAO();
+
+			for (Student student : students) {
+
+				Test test =
+						testDao.get(
+								student,
+								subject,
+								teacher.getSchool(),
+								Integer.parseInt(no));
+
+				if (test != null) {
+
+					pointMap.put(
+							student.getNo(),
+							test.getPoint());
+				}
+			}
+
+			req.setAttribute(
+					"point_map",
+					pointMap);
 		}
 
 		// JSPへ遷移
 		req.getRequestDispatcher(
 				"/scoremanager/main/test_regist.jsp")
 				.forward(req, res);
+		
+		System.out.println(
+				"検索no = " + no);
 	}
 }
