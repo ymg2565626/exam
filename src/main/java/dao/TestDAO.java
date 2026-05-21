@@ -238,13 +238,15 @@ public class TestDAO extends DAO {
 			if (old == null) {
 
 				String sql =
-					"INSERT INTO test("
-					+ "student_no, "
-					+ "subject_cd, "
-					+ "school_cd, "
-					+ "no, "
-					+ "point"
-					+ ") VALUES(?, ?, ?, ?, ?)";
+						"INSERT INTO test("
+						+ "student_no, "
+						+ "subject_cd, "
+						+ "school_cd, "
+						+ "class_num, "
+						+ "no, "
+						+ "point, "
+						+ "ent_year"
+						+ ") VALUES(?, ?, ?, ?, ?, ?, ?)";
 
 				st = con.prepareStatement(sql);
 
@@ -274,9 +276,10 @@ public class TestDAO extends DAO {
 			st.setString(1, test.getStudent().getNo());
 			st.setString(2, test.getSubject().getCd());
 			st.setString(3, test.getSchool().getCd());
-			st.setInt(4, test.getNo());
-			st.setInt(5, test.getPoint());
-
+			st.setString(4, test.getClassNum());
+			st.setInt(5, test.getNo());
+			st.setInt(6, test.getPoint());
+			st.setInt(7, test.getStudent().getEntYear());
 			count = st.executeUpdate();
 
 		} finally {
@@ -288,4 +291,57 @@ public class TestDAO extends DAO {
 
 		return count > 0;
 	}
+	
+	public List<Test> filter(Student student)
+			throws Exception {
+
+		List<Test> list =
+				new ArrayList<>();
+
+		Connection con =
+				getConnection();
+
+		PreparedStatement st =
+				null;
+
+		ResultSet rs =
+				null;
+
+		try {
+
+			String sql =
+				"SELECT * FROM test "
+				+ "WHERE student_no = ? "
+				+ "ORDER BY no";
+
+			st = con.prepareStatement(sql);
+
+			st.setString(
+					1,
+					student.getNo());
+
+			rs = st.executeQuery();
+
+			list = postFilter(
+					rs,
+					student.getSchool());
+
+		} finally {
+
+			if (rs != null) {
+				rs.close();
+			}
+
+			if (st != null) {
+				st.close();
+			}
+
+			if (con != null) {
+				con.close();
+			}
+		}
+
+		return list;
+	}
+	
 }
