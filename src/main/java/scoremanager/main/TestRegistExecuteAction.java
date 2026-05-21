@@ -78,8 +78,7 @@ public class TestRegistExecuteAction extends Action {
 			if (pointStr != null
 					&& !pointStr.isEmpty()) {
 
-				Test test =
-						new Test();
+				Test test = new Test();
 
 				test.setStudent(student);
 
@@ -88,10 +87,14 @@ public class TestRegistExecuteAction extends Action {
 				test.setSchool(
 						teacher.getSchool());
 
-				test.setClassNum(classNum);
-
+				// 回数
 				test.setNo(no);
 
+				// クラス番号
+				test.setClassNum(
+						student.getClassNum());
+
+				// 点数
 				test.setPoint(
 						Integer.parseInt(pointStr));
 
