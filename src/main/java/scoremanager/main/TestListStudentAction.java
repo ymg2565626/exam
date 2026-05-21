@@ -40,19 +40,26 @@ public class TestListStudentAction extends Action {
 				new TestDAO();
 
 		List<Test> testList =
-				testDao.filter(
-						student.getEntYear(),
-						student.getClassNum(),
-						null,
-						0,
-						teacher.getSchool());
+				testDao.filter(student);
 
 		req.setAttribute(
 				"testList",
 				testList);
 
-		req.getRequestDispatcher(
-				"test_list_student.jsp")
-				.forward(req, res);
+		if (student == null) {
+
+			req.setAttribute(
+					"error",
+					"学生が存在しません");
+
+			req.getRequestDispatcher(
+					"test_list_student.jsp")
+					.forward(req, res);
+
+			return;
+		}
+		
+		System.out.println(studentNo);
+		System.out.println(student);
 	}
 }
