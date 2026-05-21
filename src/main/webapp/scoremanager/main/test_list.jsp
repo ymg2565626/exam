@@ -25,7 +25,7 @@
 			<div class="border rounded p-4">
 
 				<!-- 科目検索 -->
-				<form action="TestListSubject.action"
+				<form action="TestListSubjectExecute.action"
 					method="post">
 
 					<div class="row align-items-end mb-4">
