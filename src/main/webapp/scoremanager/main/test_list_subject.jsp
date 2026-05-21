@@ -1,89 +1,62 @@
-<%-- 学生成績参照JSP --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%--科目別成績一覧JSP --%>
+<%@ page language="java"
+	contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
-<c:import url="/common/base.jsp">
+<div class="mx-3">
 
-	<c:param name="title">
-		学生別成績参照
-	</c:param>
+	<div class="mb-2">
+		科目：${subject.name}
+	</div>
 
-	<c:param name="content">
+	<table class="table table-hover mb-0">
 
-		<section class="me-4">
+		<tr>
+			<th>入学年度</th>
+			<th>クラス</th>
+			<th>学生番号</th>
+			<th>氏名</th>
+			<th>1回</th>
+			<th>2回</th>
+		</tr>
 
-			<h2 class="h3 mb-4 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
-				学生別成績参照
-			</h2>
+		<c:forEach var="student" items="${students}">
 
-			<c:choose>
+			<tr>
 
-				<c:when test="${testList.size() > 0}">
+				<td>${student.entYear}</td>
+				<td>${student.classNum}</td>
+				<td>${student.studentNo}</td>
+				<td>${student.studentName}</td>
 
-					<table class="table table-hover">
+				<td>${student.getPoint(1)}</td>
+				
+				<td>
 
-						<tr>
+		<c:choose>
 
-							<th>
-								科目名
-							</th>
+			<c:when test="${student.getPoint(2) == -1}">
 
-							<th>
-								科目コード
-							</th>
+				-
 
-							<th>
-								回数
-							</th>
+			</c:when>
 
-							<th>
-								点数
-							</th>
+			<c:otherwise>
 
-						</tr>
+				${student.getPoint(2)}
 
-						<c:forEach var="test" items="${testList}">
+			</c:otherwise>
 
-							<tr>
+		</c:choose>
 
-								<td>
-									${test.subject.name}
-								</td>
+	</td>
 
-								<td>
-									${test.subject.cd}
-								</td>
+			</tr>
 
-								<td>
-									${test.no}
-								</td>
+		</c:forEach>
 
-								<td>
-									${test.point}
-								</td>
+	</table>
 
-							</tr>
-
-						</c:forEach>
-
-					</table>
-
-				</c:when>
-
-				<c:otherwise>
-
-					<div>
-						成績情報が存在しませんでした
-					</div>
-
-				</c:otherwise>
-
-			</c:choose>
-
-		</section>
-
-	</c:param>
-
-</c:import>
+</div>
