@@ -1,4 +1,4 @@
-<%--科目別成績一覧JSP --%>
+<%-- 科目別成績一覧JSP --%>
 <%@ page language="java"
 	contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -7,56 +7,84 @@
 
 <div class="mx-3">
 
-	<div class="mb-2">
-		科目：${subject.name}
-	</div>
+	<c:choose>
 
-	<table class="table table-hover mb-0">
+		<%-- 成績情報がない場合 --%>
+		<c:when test="${empty students}">
 
-		<tr>
-			<th>入学年度</th>
-			<th>クラス</th>
-			<th>学生番号</th>
-			<th>氏名</th>
-			<th>1回</th>
-			<th>2回</th>
-		</tr>
+			<div class="alert alert-warning">
+				学生情報が存在しませんでした
+			</div>
 
-		<c:forEach var="student" items="${students}">
+		</c:when>
 
-			<tr>
+		<%-- 成績情報がある場合 --%>
+		<c:otherwise>
 
-				<td>${student.entYear}</td>
-				<td>${student.classNum}</td>
-				<td>${student.studentNo}</td>
-				<td>${student.studentName}</td>
+			<div class="mb-2">
+				科目：${subject.name}
+			</div>
 
-				<td>${student.getPoint(1)}</td>
-				
-				<td>
+			<table class="table table-hover mb-0">
 
-		<c:choose>
+				<tr>
+					<th>入学年度</th>
+					<th>クラス</th>
+					<th>学生番号</th>
+					<th>氏名</th>
+					<th>1回</th>
+					<th>2回</th>
+				</tr>
 
-			<c:when test="${student.getPoint(2) == -1}">
+				<c:forEach var="student" items="${students}">
 
-				-
+					<tr>
 
-			</c:when>
+						<td>${student.entYear}</td>
+						<td>${student.classNum}</td>
+						<td>${student.studentNo}</td>
+						<td>${student.studentName}</td>
 
-			<c:otherwise>
+						<td>
 
-				${student.getPoint(2)}
+							<c:choose>
 
-			</c:otherwise>
+								<c:when test="${student.getPoint(1) == -1}">
+									-
+								</c:when>
 
-		</c:choose>
+								<c:otherwise>
+									${student.getPoint(1)}
+								</c:otherwise>
 
-	</td>
+							</c:choose>
 
-			</tr>
+						</td>
 
-		</c:forEach>
+						<td>
 
-	</table>
+							<c:choose>
+
+								<c:when test="${student.getPoint(2) == -1}">
+									-
+								</c:when>
+
+								<c:otherwise>
+									${student.getPoint(2)}
+								</c:otherwise>
+
+							</c:choose>
+
+						</td>
+
+					</tr>
+
+				</c:forEach>
+
+			</table>
+
+		</c:otherwise>
+
+	</c:choose>
 
 </div>
