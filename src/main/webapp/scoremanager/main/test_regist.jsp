@@ -1,235 +1,113 @@
-<%-- 成績登録JSP --%>
-<%@ page language="java"
-	contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+package scoremanager.main;
 
-<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+import java.util.ArrayList;
+import java.util.List;
 
-<c:import url="/common/base.jsp">
+import bean.Student;
+import bean.Subject;
+import bean.Teacher;
+import bean.Test;
+import dao.StudentDAO;
+import dao.SubjectDAO;
+import dao.TestDAO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import tool.Action;
 
-	<c:param name="title">
-		成績登録
-	</c:param>
+public class TestRegistExecuteAction extends Action {
 
-	<c:param name="content">
+	@Override
+	public void execute(
+			HttpServletRequest req,
+			HttpServletResponse res)
+			throws Exception {
 
-		<section class="me-4">
+		HttpSession session =
+				req.getSession();
 
-			<h2 class="h3 mb-4 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
-				成績登録
-			</h2>
+		Teacher teacher =
+				(Teacher)session.getAttribute("user");
 
-			<!-- ===================== -->
-			<!-- 検索フォーム -->
-			<!-- ===================== -->
+		StudentDAO studentDao =
+				new StudentDAO();
 
-			<form action="TestRegist.action" method="post">
+		SubjectDAO subjectDao =
+				new SubjectDAO();
 
-				<div class="row border mx-3 mb-4 py-3 align-items-end rounded">
+		TestDAO testDao =
+				new TestDAO();
 
-					<div class="col-3">
+		// パラメータ取得
+		int entYear =
+				Integer.parseInt(
+						req.getParameter("f1"));
 
-						<label class="form-label">
-							入学年度
-						</label>
+		String classNum =
+				req.getParameter("f2");
 
-						<select name="f1" class="form-select">
+		String subjectCd =
+				req.getParameter("subject");
 
-							<option value="">
-								--------
-							</option>
+		int no =
+				Integer.parseInt(
+						req.getParameter("no"));
 
-							<c:forEach var="year" items="${ent_year_set}">
+		Subject subject =
+				subjectDao.get(
+						subjectCd,
+						teacher.getSchool());
 
-								<option value="${year}">
-									${year}
-								</option>
+		// 学生一覧取得
+		List<Student> students =
+				studentDao.filter(
+						entYear,
+						classNum,
+						false,
+						teacher.getSchool());
 
-							</c:forEach>
+		List<Test> testList =
+				new ArrayList<>();
 
-						</select>
+		for (Student student : students) {
 
-					</div>
+			String pointStr =
+					req.getParameter(
+							"point_" + student.getNo());
 
-					<div class="col-3">
+			if (pointStr != null
+					&& !pointStr.isEmpty()) {
 
-						<label class="form-label">
-							クラス
-						</label>
+				Test test = new Test();
 
-						<select name="f2" class="form-select">
+				test.setStudent(student);
 
-							<option value="">
-								--------
-							</option>
+				test.setSubject(subject);
 
-							<c:forEach var="num" items="${class_num_set}">
+				test.setSchool(
+						teacher.getSchool());
 
-								<option value="${num}">
-									${num}
-								</option>
+				// 回数
+				test.setNo(no);
 
-							</c:forEach>
+				// クラス番号
+				test.setClassNum(
+						student.getClassNum());
 
-						</select>
+				// 点数
+				test.setPoint(
+						Integer.parseInt(pointStr));
 
-					</div>
-
-					<div class="col-3">
-
-						<label class="form-label">
-							科目
-						</label>
-
-						<select name="subject" class="form-select">
-
-							<option value="">
-								--------
-							</option>
-
-							<c:forEach var="subject" items="${subject_set}">
-
-								<option value="${subject.cd}">
-									${subject.name}
-								</option>
-
-							</c:forEach>
-
-						</select>
-
-					</div>
-
-					<div class="col-2">
-
-						<label class="form-label">
-							回数
-						</label>
-
-						<select name="no" class="form-select">
-
-							<option value="1">1回</option>
-							<option value="2">2回</option>
-							<option value="3">3回</option>
-
-						</select>
-
-					</div>
-
-					<div class="col-1">
-
-						<button type="submit"
-							class="btn btn-secondary">
-
-							検索
-
-						</button>
-
-					</div>
-
-				</div>
-
-			</form>
-
-			<!-- ===================== -->
-			<!-- 検索結果 -->
-			<!-- ===================== -->
-
-			<c:if test="${not empty students}">
-
-				<form action="TestRegistExecute.action"
-					method="post">
-
-					<!-- hidden -->
-					<input type="hidden"
-						name="f1"
-						value="${param.f1}">
-
-					<input type="hidden"
-						name="f2"
-						value="${param.f2}">
-
-					<input type="hidden"
-						name="subject"
-						value="${param.subject}">
-
-					<input type="hidden"
-						name="no"
-						value="${param.no}">
-
-					<h3 class="mb-3">
-
-						科目：${subject_name}
-						（第${no}回）
-
-					</h3>
-
-					<table class="table table-hover">
-
-						<tr>
-
-							<th>入学年度</th>
-							<th>クラス</th>
-							<th>学生番号</th>
-							<th>氏名</th>
-							<th>点数</th>
-
-						</tr>
-
-						<c:forEach var="student"
-							items="${students}">
-
-							<tr>
-
-								<td>
-									${student.entYear}
-								</td>
-
-								<td>
-									${student.classNum}
-								</td>
-
-								<td>
-									${student.no}
-								</td>
-
-								<td>
-									${student.name}
-								</td>
-
-								<td>
-
-									<input
-										type="number"
-										name="point_${student.no}"
-										class="form-control"
-										min="0"
-										max="100">
-
-								</td>
-
-							</tr>
-
-						</c:forEach>
-
-					</table>
-
-					<div class="mt-4">
-
-						<button type="submit"
-							class="btn btn-primary">
-
-							登録して終了
-
-						</button>
-
-					</div>
-
-				</form>
-
-			</c:if>
-
-		</section>
-
-	</c:param>
-
-</c:import>
+				testList.add(test);
+			}
+		}
+
+		// 保存
+		testDao.save(testList);
+
+		// 完了画面へ
+		req.getRequestDispatcher(
+				"test_regist_done.jsp")
+				.forward(req, res);
+	}
+}
