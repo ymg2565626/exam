@@ -19,7 +19,7 @@
 				</div>
 				<div class="col d-flex align-items-center justify-content-center mx-2 rounded shadow"
 					style="height: 10rem; background-color: #C6E0B4;">
-					<p>成績管理<br>
+					<a href="TestRegist.action"><p>成績管理</a><br>
 					<a href="TestRegist.action">成績登録</a><br>
 					<a href="TestList.action">成績参照</a></p>
 				</div>
