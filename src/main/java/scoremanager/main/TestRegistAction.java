@@ -126,19 +126,22 @@ public class TestRegistAction extends Action {
 		System.out.println(
 				"no = " + no);
 		
-		if (f1 != null) {
+		String search =
+				req.getParameter("search");
 
-			if (f1.isEmpty()
-					|| f2.isEmpty()
-					|| subjectCd.isEmpty()
-					|| no.isEmpty()) {
+		if (search != null) {
+
+			if (f1 == null || f1.isEmpty()
+					|| f2 == null || f2.isEmpty()
+					|| subjectCd == null || subjectCd.isEmpty()
+					|| no == null || no.isEmpty()) {
 
 				req.setAttribute(
 						"error",
 						"すべて選択してください");
 
 				req.getRequestDispatcher(
-						"test_regist.jsp")
+						"/scoremanager/main/test_regist.jsp")
 						.forward(req, res);
 
 				return;
@@ -214,6 +217,18 @@ public class TestRegistAction extends Action {
 					pointMap.put(
 							student.getNo(),
 							test.getPoint());
+					
+					System.out.println(
+						    "student=" + student.getNo());
+
+						System.out.println(
+						    "subject=" + subject.getCd());
+
+						System.out.println(
+						    "no=" + no);
+
+						System.out.println(
+						    "test=" + test);
 				}
 			}
 
