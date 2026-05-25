@@ -35,6 +35,10 @@ public class TestListStudentDAO extends DAO {
         while (rs.next()) {
 
             TestListStudent tls = new TestListStudent();
+            
+            tls.setStudentNo(rs.getString("student_no"));
+            tls.setStudentName(rs.getString("student_name"));
+            tls.setClassNum(rs.getString("class_num"));
 
             tls.setSubjectName(rs.getString("subject_name"));
             tls.setSubjectCd(rs.getString("subject_cd"));
@@ -53,14 +57,16 @@ public class TestListStudentDAO extends DAO {
     public List<TestListStudent> filter(
             String entYear,
             String classNum,
-            String subjectCd
+            String subjectCd,
+            String studentNo
     ) throws Exception {
 
         List<TestListStudent> list =
             new ArrayList<>();
 
         String sql = baseSql
-                + "where 1=1 ";
+                + "where 1=1"
+                + "where st.no = ?";
 
         // 入学年度
         if (entYear != null && !entYear.isEmpty()) {
@@ -98,6 +104,8 @@ public class TestListStudentDAO extends DAO {
             if (subjectCd != null && !subjectCd.isEmpty()) {
                 st.setString(idx++, subjectCd);
             }
+            
+            st.setString(1, studentNo);
 
             ResultSet rs = st.executeQuery();
 
