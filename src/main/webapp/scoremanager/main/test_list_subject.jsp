@@ -115,12 +115,12 @@
    			 <div class="text-warning mb-3">
        			 ${error}
     		</div>
-    
-			<hr class="my-4">
 			
 			
 
 			</c:if>
+			
+			<hr class="my-4">
 
 			<form action="TestListStudent.action" method="get">
 
