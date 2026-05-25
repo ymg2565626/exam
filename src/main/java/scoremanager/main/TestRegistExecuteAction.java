@@ -23,12 +23,14 @@ public class TestRegistExecuteAction extends Action {
 			HttpServletResponse res)
 			throws Exception {
 
+		// セッション取得
 		HttpSession session =
 				req.getSession();
 
 		Teacher teacher =
-				(Teacher)session.getAttribute("user");
+				(Teacher) session.getAttribute("user");
 
+		// DAO
 		StudentDAO studentDao =
 				new StudentDAO();
 
@@ -53,6 +55,7 @@ public class TestRegistExecuteAction extends Action {
 				Integer.parseInt(
 						req.getParameter("no"));
 
+		// 科目取得
 		Subject subject =
 				subjectDao.get(
 						subjectCd,
@@ -66,15 +69,18 @@ public class TestRegistExecuteAction extends Action {
 						false,
 						teacher.getSchool());
 
+		// 保存用リスト
 		List<Test> testList =
 				new ArrayList<>();
 
+		// 学生ごとに点数取得
 		for (Student student : students) {
 
 			String pointStr =
 					req.getParameter(
 							"point_" + student.getNo());
 
+			// 未入力はスキップ
 			if (pointStr != null
 					&& !pointStr.isEmpty()) {
 
@@ -85,27 +91,24 @@ public class TestRegistExecuteAction extends Action {
 				test.setSubject(subject);
 
 				test.setSchool(
-						teacher.getSchool());
+				    teacher.getSchool());
 
-				// 回数
-				test.setNo(no);
-
-				// クラス番号
 				test.setClassNum(
-						student.getClassNum());
+				    student.getClassNum());
 
-				// 点数
+				test.setNo((no));
+
 				test.setPoint(
-						Integer.parseInt(pointStr));
+				    Integer.parseInt(pointStr));
 
 				testList.add(test);
 			}
 		}
 
-		// 保存
+		// DB保存
 		testDao.save(testList);
 
-		// 完了画面へ
+		// 完了画面
 		req.getRequestDispatcher(
 				"test_regist_done.jsp")
 				.forward(req, res);
