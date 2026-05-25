@@ -150,13 +150,15 @@ public class TestDAO extends DAO {
 		try {
 
 			String sql =
-				baseSql
-				+ "WHERE ent_year = ? "
-				+ "AND class_num = ? "
-				+ "AND subject_cd = ? "
-				+ "AND no = ? "
-				+ "AND school_cd = ? "
-				+ "ORDER BY student_no";
+				"SELECT test.* FROM test "
+				+ "JOIN student ON test.student_no = student.no "
+				+ "AND test.school_cd = student.school_cd "
+				+ "WHERE student.ent_year = ? "
+				+ "AND test.class_num = ? "
+				+ "AND test.subject_cd = ? "
+				+ "AND test.no = ? "
+				+ "AND test.school_cd = ? "
+				+ "ORDER BY test.student_no";
 
 			st = con.prepareStatement(sql);
 
@@ -244,9 +246,8 @@ public class TestDAO extends DAO {
 						+ "school_cd, "
 						+ "class_num, "
 						+ "no, "
-						+ "point, "
-						+ "ent_year"
-						+ ") VALUES(?, ?, ?, ?, ?, ?, ?)";
+						+ "point"
+						+ ") VALUES(?, ?, ?, ?, ?, ?)";
 
 				st = con.prepareStatement(sql);
 
@@ -279,7 +280,7 @@ public class TestDAO extends DAO {
 			st.setString(4, test.getClassNum());
 			st.setInt(5, test.getNo());
 			st.setInt(6, test.getPoint());
-			st.setInt(7, test.getStudent().getEntYear());
+
 			count = st.executeUpdate();
 
 		} finally {
@@ -291,7 +292,7 @@ public class TestDAO extends DAO {
 
 		return count > 0;
 	}
-	
+
 	public List<Test> filter(Student student)
 			throws Exception {
 
@@ -343,5 +344,5 @@ public class TestDAO extends DAO {
 
 		return list;
 	}
-	
+
 }
