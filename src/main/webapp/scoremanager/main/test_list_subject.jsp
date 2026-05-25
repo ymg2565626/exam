@@ -109,7 +109,18 @@
 				</div>
 
 			</form>
+			<%--　検索条件不足エラー --%>
+			<c:if test="${not empty error}">
+
+   			 <div class="text-warning mb-3">
+       			 ${error}
+    		</div>
+    
 			<hr class="my-4">
+			
+			
+
+			</c:if>
 
 			<form action="TestListStudent.action" method="get">
 
@@ -154,7 +165,19 @@
 
 
 			<%-- 一覧表示部分 --%>
-			<c:if test="${not empty students}">
+		<c:choose>
+			<%-- 成績情報がない場合 --%>
+		<c:when test="${empty students}">
+
+			<div class="mt-3">
+				学生情報が存在しませんでした
+			</div>
+
+		</c:when>
+
+		<%-- 成績情報がある場合 --%>
+		<c:otherwise>
+			
 
 				<div class="mb-2">
 					科目：${subject.name}
@@ -218,7 +241,9 @@
 
 				</table>
 
-			</c:if>
+			</c:otherwise>
+
+		</c:choose>
 
 		</section>
 
