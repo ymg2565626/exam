@@ -24,7 +24,8 @@ public class TestListSubjectExecuteAction extends Action {
             throws Exception {
 
         // セッション取得
-        HttpSession session = request.getSession();
+        HttpSession session =
+                request.getSession();
 
         Teacher teacher =
                 (Teacher) session.getAttribute("user");
@@ -33,9 +34,8 @@ public class TestListSubjectExecuteAction extends Action {
         String subjectCd =
                 request.getParameter("subject");
 
-        int entYear =
-                Integer.parseInt(
-                        request.getParameter("f1"));
+        String entYearStr =
+                request.getParameter("f1");
 
         String classNum =
                 request.getParameter("f2");
@@ -44,27 +44,10 @@ public class TestListSubjectExecuteAction extends Action {
         SubjectDAO subjectDao =
                 new SubjectDAO();
 
-        TestListSubjectDAO testListSubjectDao =
-                new TestListSubjectDAO();
-
-        // 科目情報取得
-        Subject subject =
-                subjectDao.get(
-                        subjectCd,
-                        teacher.getSchool());
-
-        // 学生一覧取得
-        List<TestListSubject> students =
-                testListSubjectDao.filter(
-                        entYear,
-                        classNum,
-                        subject,
-                        teacher.getSchool());
-
-        // プルダウン用
         ClassNumDAO classNumDao =
                 new ClassNumDAO();
 
+        // プルダウン用データ
         LocalDate today =
                 LocalDate.now();
 
@@ -94,6 +77,44 @@ public class TestListSubjectExecuteAction extends Action {
                 "subject_set",
                 subjectDao.filter(
                         teacher.getSchool()));
+
+        // 未入力チェック
+        if (entYearStr == null || entYearStr.isEmpty()
+                || classNum == null || classNum.isEmpty()
+                || subjectCd == null || subjectCd.isEmpty()) {
+
+            request.setAttribute(
+                    "error",
+                    "入学年度とクラスと科目を選択してください");
+
+            request.getRequestDispatcher(
+                    "test_list_subject.jsp")
+                    .forward(request, response);
+
+            return;
+        }
+
+        // int変換
+        int entYear =
+                Integer.parseInt(entYearStr);
+
+        // DAO生成
+        TestListSubjectDAO testListSubjectDao =
+                new TestListSubjectDAO();
+
+        // 科目情報取得
+        Subject subject =
+                subjectDao.get(
+                        subjectCd,
+                        teacher.getSchool());
+
+        // 学生一覧取得
+        List<TestListSubject> students =
+                testListSubjectDao.filter(
+                        entYear,
+                        classNum,
+                        subject,
+                        teacher.getSchool());
 
         // 一覧表示用
         request.setAttribute(
