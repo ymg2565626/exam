@@ -16,7 +16,7 @@
 		<section class="me-4">
 
 			<h2 class="h3 mb-4 fw-bold bg-secondary bg-opacity-10 py-2 px-4">
-				成績参照（科目）
+				成績一覧（科目）
 			</h2>
 			
 			<div class="border rounded p-3 mb-3">
