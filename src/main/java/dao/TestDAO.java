@@ -1,6 +1,6 @@
-	package dao;
+package dao;
 	
-	import java.sql.Connection;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -14,91 +14,95 @@ import bean.Test;
 	public class TestDAO extends DAO {
 	
 		private String baseSql = "SELECT * FROM test ";
-		private int count;
+		
 	
 		// 単一取得
 		public Test get(
-		        Student student,
-		        Subject subject,
-		        School school,
-		        int no) throws Exception {
+				Student student,
+				Subject subject,
+				School school,
+				int no)
+				throws Exception {
 
-		    Test test = null;
+			Test test = null;
 
-		    Connection con = getConnection();
+			Connection con =
+					getConnection();
 
-		    PreparedStatement st = null;
+			PreparedStatement st =
+					null;
 
-		    ResultSet rs = null;
+			ResultSet rs =
+					null;
 
-		    try {
+			try {
 
-		        String sql =
-		            "SELECT * FROM test "
-		            + "WHERE student_no = ? "
-		            + "AND subject_cd = ? "
-		            + "AND school_cd = ? "
-		            + "AND no = ?";
+				String sql =
+						"SELECT * FROM test "
+						+ "WHERE student_no = ? "
+						+ "AND subject_cd = ? "
+						+ "AND school_cd = ? "
+						+ "AND no = ?";
 
-		        st = con.prepareStatement(sql);
+				st = con.prepareStatement(sql);
 
-		        st.setString(
-		                1,
-		                student.getNo());
+				st.setString(
+						1,
+						student.getNo());
 
-		        st.setString(
-		                2,
-		                subject.getCd());
+				st.setString(
+						2,
+						subject.getCd());
 
-		        st.setString(
-		                3,
-		                school.getCd());
+				st.setString(
+						3,
+						school.getCd());
 
-		        st.setInt(
-		                4,
-		                no);
+				st.setInt(
+						4,
+						no);
 
-		        rs = st.executeQuery();
+				rs = st.executeQuery();
 
-		        SubjectDAO subjectDao =
-		                new SubjectDAO();
+				if (rs.next()) {
 
-		        if (rs.next()) {
+					test = new Test();
 
-		            test = new Test();
+					test.setStudent(student);
 
-		            test.setStudent(student);
+					test.setSubject(subject);
 
-		            test.setSubject(subject);
+					test.setSchool(school);
 
-		            test.setSchool(school);
+					test.setClassNum(
+							rs.getString(
+									"class_num"));
 
-		            test.setClassNum(
-		                    rs.getString("class_num"));
+					test.setNo(
+							rs.getInt(
+									"no"));
 
-		            test.setNo(
-		                    rs.getInt("no"));
+					test.setPoint(
+							rs.getInt(
+									"point"));
+				}
 
-		            test.setPoint(
-		                    rs.getInt("point"));
-		        }
+			} finally {
 
-		    } finally {
+				if (rs != null) {
+					rs.close();
+				}
 
-		        if (rs != null) {
-		            rs.close();
-		        }
+				if (st != null) {
+					st.close();
+				}
 
-		        if (st != null) {
-		            st.close();
-		        }
+				if (con != null) {
+					con.close();
+				}
+			}
 
-		        if (con != null) {
-		            con.close();
-		        }
-		    }
-
-		    return test;
+			return test;
 		}
 	
 		// ResultSet -> List変換
@@ -158,7 +162,6 @@ import bean.Test;
 			ResultSet rs = null;
 	
 			try {
-	
 				String sql =
 					baseSql
 					+ "WHERE ent_year = ? "
@@ -246,7 +249,6 @@ import bean.Test;
 						test.getNo());
 	
 				if (old == null) {
-	
 					String sql =
 							"INSERT INTO test("
 							+ "student_no, "
@@ -254,10 +256,9 @@ import bean.Test;
 							+ "school_cd, "
 							+ "class_num, "
 							+ "no, "
-							+ "point, "
-							+ "ent_year"
-							+ ") VALUES(?, ?, ?, ?, ?, ?, ?)";
-	
+							+ "point "
+							+ ") VALUES(?, ?, ?, ?, ?, ?)";
+					
 					st = con.prepareStatement(sql);
 	
 				} else {
@@ -282,14 +283,30 @@ import bean.Test;
 	
 					return count > 0;
 				}
-	
-				st.setString(1, test.getStudent().getNo());
-				st.setString(2, test.getSubject().getCd());
-				st.setString(3, test.getSchool().getCd());
-				st.setString(4, test.getClassNum());
-				st.setInt(5, test.getNo());
-				st.setInt(6, test.getPoint());
-				st.setInt(7, test.getStudent().getEntYear());
+				
+						st.setString(
+								1,
+								test.getStudent().getNo());
+
+						st.setString(
+								2,
+								test.getSubject().getCd());
+
+						st.setString(
+								3,
+								test.getSchool().getCd());
+
+						st.setString(
+								4,
+								test.getClassNum());
+
+						st.setInt(
+								5,
+								test.getNo());
+
+						st.setInt(
+								6,
+								test.getPoint());
 				count = st.executeUpdate();
 	
 			} finally {
