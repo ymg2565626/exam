@@ -24,6 +24,10 @@
 			<!-- ===================== -->
 
 			<form action="TestRegist.action" method="post">
+			
+				<input type="hidden"
+					name="search"
+					value="true">
 
 				<div class="row border mx-3 mb-4 py-3 align-items-end rounded">
 
@@ -124,10 +128,9 @@
 					<div class="col-1">
 
 						<button type="submit"
-							class="btn btn-secondary">
-
+							name="search"
+							value="true">
 							検索
-
 						</button>
 
 					</div>
@@ -211,9 +214,9 @@
 										min="0"
 										max="100"
 										required
-										step="1"
 										oninput="checkScore(this)"
-										value="<c:out value='${point_map[student.no]}'/>">
+										step="1"
+										value="${point_map[student.no]}">
 
 									<div class="text-danger small"
 										id="error_${student.no}">
