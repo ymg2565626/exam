@@ -1,0 +1,48 @@
+package scoremanager.main;
+
+import java.util.List;
+
+import bean.Student;
+import bean.TestListStudent;
+import dao.StudentDAO;
+import dao.TestListStudentDAO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import tool.Action;
+
+public class TestListStudentExecuteAction extends Action {
+
+    @Override
+    public void execute(
+            HttpServletRequest req,
+            HttpServletResponse res)
+            throws Exception {
+    	
+
+        String studentNo =
+                req.getParameter("studentNo");
+
+        // 学生情報取得
+        StudentDAO studentDao =
+                new StudentDAO();
+
+        Student student =
+                studentDao.get(studentNo);
+
+        // 成績取得
+        TestListStudentDAO dao =
+                new TestListStudentDAO();
+
+        List<TestListStudent> list =
+                dao.filter(studentNo);
+        
+        // JSPへ渡す
+        req.setAttribute("searched",true);
+        req.setAttribute("student", student);
+        req.setAttribute("test_list", list);
+
+        req.getRequestDispatcher(
+                "test_list.jsp")
+                .forward(req, res);
+    }
+}
