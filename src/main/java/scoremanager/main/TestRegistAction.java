@@ -138,7 +138,7 @@ public class TestRegistAction extends Action {
 
 				req.setAttribute(
 						"error",
-						"すべて選択してください");
+						"入学年度とクラスと科目と回数を選択してください");
 
 				req.getRequestDispatcher(
 						"/scoremanager/main/test_regist.jsp")
